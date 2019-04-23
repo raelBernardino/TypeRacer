@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Completed from './components/Completed'
 import './App.scss';
 
-class App extends Component {
+export default class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -12,11 +12,23 @@ class App extends Component {
           completed: false
         },
         {
-          text: '"Remember it\'s a sin to kill a mockingbird." That was the only time I ever heard Atticus say it was a sin to do something, and I asked Miss Maudie about it. ',
+          text: '"Remember it\'s a sin to kill a mockingbird." That was the only time I ever heard Atticus say it was a sin to do something, and I asked Miss Maudie about it.',
           completed: false
         },
         {
-          text: 'hello',
+          text: 'I think we dream so we don’t have to be apart for so long. If we’re in each other’s dreams, we can be together all the time.',
+          completed: false
+        },
+        {
+          text: 'Eddie pushed the money into Dominguez\'s palm. Then he walked out back to the storage area. A small "fishing hole" had been cut into the boardwalk planks years ago, and Eddie lifted the plastic cap. He tugged on a nylon line that dropped 80 feet to the sea. A piece of bologna was still attached.',
+          completed: false
+        },
+        {
+          text: '"You mean Dr. Carlisle Cullen\'s family?" the tall, older boy asked before I could respond, much to Lauren\'s irritation. He was really closer to a man than a boy, and his voice was very deep.',
+          completed: false
+        },
+        {
+          text: 'Remember also your Creator in the days of your youth, before the evil days come and the years draw near of which you will say, "I have no pleasure in them"',
           completed: false
         }
       ],
@@ -27,7 +39,9 @@ class App extends Component {
       completed: false,
       background: {
         backgroundColor: '',
-      }
+      },
+      timer: 0,
+      startTimer: false
     }
     this._reset = this._reset.bind(this)
     this._checkIfCompleted = this._checkIfCompleted.bind(this)
@@ -40,6 +54,13 @@ class App extends Component {
 
   componentDidMount() {
     this._randomChallengePicker()
+  }
+
+  _timer() {
+    setInterval(() => {
+      this.setState({ timer: this.state.timer + 1 })
+      console.log(this.state.timer)
+    }, 1000)
   }
 
   _randomChallengePicker() {
@@ -56,7 +77,6 @@ class App extends Component {
     })
     this._splitSentence(num)
   }
-
 
   _splitSentence(num) {
     const typeChallenges = this.state.typeChallenges
@@ -118,10 +138,11 @@ class App extends Component {
   _checkIfCompleted() {
     let userType = this.state.userType
     const challengeArr = this.state.challengeArr
-    .join('')
+      .join('')
     if (userType === challengeArr) {
       this.setState({
-        completed: !this.state.completed
+        completed: !this.state.completed,
+        startTimer: !this.state.startTimer
       })
     }
   }
@@ -153,5 +174,3 @@ class App extends Component {
     );
   }
 }
-
-export default App;
